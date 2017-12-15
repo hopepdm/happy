@@ -278,7 +278,7 @@
     <div id="letters"></div>
   </div>
 </div>
-<embed src="Home_wangshian.mp3" style='position:absolute;top:10px;left:10px;z-index:999' autostart=true loop=true></embed>
+<embed id='music' src="Home_wangshian.mp3" style='position:absolute;top:10px;left:10px;z-index:999' autostart=true loop=true></embed>
 
 <script>
 const getEl = el => document.getElementById(el)
@@ -571,6 +571,19 @@ window.onkeydown = e => {
 }
 
 window.onload = () => {
+
+	function audioAutoPlay(id){
+    var audio = document.getElementById(id);
+    audio.play();
+    document.addEventListener("WeixinJSBridgeReady", function () {
+            audio.play();
+    }, false);
+    document.addEventListener('YixinJSBridgeReady', function() {
+        audio.play();
+    }, false);
+}
+audioAutoPlay('music');
+
 	var char = '老弟，生日快乐哈！\n' +
 	'想了一天，不知道送你什么好，就写一个网站吧\n' +
 	'其实也不是我做的，我是抄的，嘿嘿嘿\n' +
