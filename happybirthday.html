@@ -278,7 +278,7 @@
     <div id="letters"></div>
   </div>
 </div>
-<audio id='music' src="Home_wangshian.mp3" style='position:absolute;top:10px;left:10px;z-index:999' autostart=true loop=true></audio>
+<audio id='music' src="Home_wangshian.mp3" style='position:absolute;top:10px;left:10px;z-index:999' autostart preload loop='loop'></audio>
 
 <script>
 const getEl = el => document.getElementById(el)
@@ -571,15 +571,20 @@ window.onkeydown = e => {
 }
 
 function audioAutoPlay(id){
-	var audio = document.getElementById(id);
-	audio.play();
-	document.addEventListener("WeixinJSBridgeReady", function () {
-					audio.play();
-	}, false);
-	document.addEventListener('YixinJSBridgeReady', function() {
-			audio.play();
-	}, false);
-}
+    var audio = document.getElementById(id),
+        play = function(){
+            audio.play();
+            document.removeEventListener("touchstart",play, false);
+        };
+    audio.play();
+    document.addEventListener("WeixinJSBridgeReady", function () {
+        play();
+    }, false);
+    document.addEventListener('YixinJSBridgeReady', function() {
+        play();
+    }, false);
+    document.addEventListener("touchstart",play, false);
+}  
 audioAutoPlay('music');
 
 window.onload = () => {
